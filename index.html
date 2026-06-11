@@ -1,0 +1,397 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Amiri:wght@400;700&display=swap');
+
+:root {
+  --bg: #faf9f7;
+  --bg2: #f3f1ed;
+  --bg3: #eceae4;
+  --text: #1a1814;
+  --text2: #6b6760;
+  --text3: #9e9b96;
+  --accent: #7c5cbf;
+  --accent2: #a07fd4;
+  --accent3: #e8e2f5;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
+  --card: #ffffff;
+  --particle: #c4b0e8;
+}
+[data-theme="dark"] {
+  --bg: #0f0e0d;
+  --bg2: #181714;
+  --bg3: #221f1b;
+  --text: #f0ede8;
+  --text2: #9a9590;
+  --text3: #605c57;
+  --accent: #a07fd4;
+  --accent2: #c4b0e8;
+  --accent3: rgba(124,92,191,0.18);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --card: #1a1816;
+  --particle: #7c5cbf;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body,html{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;transition:background .4s,color .4s;min-height:100vh}
+
+.page{min-height:100vh;padding-bottom:6rem;position:relative;overflow:hidden}
+
+canvas#starfield{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+.theme-btn{
+  position:absolute;top:1.5rem;right:1.5rem;z-index:100;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--card);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .25s;color:var(--text2);
+  font-size:16px;
+}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent);transform:scale(1.08)}
+
+.hero{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  padding:5rem 2rem 4rem;
+  text-align:center;
+}
+
+.kicker{
+  font-family:'Inter',sans-serif;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:2.2rem;
+}
+
+.name-wrap{position:relative;display:inline-block;margin-bottom:.6rem}
+
+.name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(64px,12vw,110px);
+  font-weight:300;font-style:italic;
+  color:var(--text);line-height:1;letter-spacing:-3px;
+  position:relative;z-index:1;
+}
+
+.name-underline{
+  position:absolute;bottom:-6px;left:0;right:0;height:1px;
+  background:var(--accent2);opacity:.5;
+}
+
+.aka{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--accent);margin-top:1rem;margin-bottom:3.5rem;
+}
+
+.scroll-hint{
+  font-size:11px;color:var(--text3);letter-spacing:.1em;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+}
+.scroll-hint .bar{
+  width:1px;height:40px;background:var(--border2);
+  animation:barPulse 2s ease-in-out infinite;
+}
+@keyframes barPulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+.content{
+  position:relative;z-index:1;
+  max-width:640px;margin:0 auto;padding:0 2rem;
+}
+
+.section{margin-bottom:4.5rem}
+
+.section-label{
+  display:flex;align-items:center;gap:1rem;margin-bottom:1.8rem;
+}
+.section-label span{
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);
+  white-space:nowrap;
+}
+.section-label::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+
+.prose{
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px;font-weight:300;line-height:1.85;
+  color:var(--text);
+}
+.prose i{font-style:italic;color:var(--accent)}
+.prose strong{font-weight:400;color:var(--text)}
+
+.qualities-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid var(--border);border-radius:16px;overflow:hidden;
+}
+.q{
+  padding:1.4rem 1.6rem;
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:var(--card);
+  transition:background .2s;
+}
+.q:nth-child(2n){border-right:none}
+.q:nth-child(3),.q:nth-child(4){border-bottom:none}
+.q:hover{background:var(--accent3)}
+
+.q-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;font-weight:300;
+  color:var(--accent2);opacity:.6;
+  line-height:1;margin-bottom:.5rem;
+}
+.q-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:.25rem}
+.q-note{font-size:12px;color:var(--text3);font-style:italic}
+
+.taweeza{
+  border:1px solid var(--accent2);
+  border-radius:16px;
+  padding:2.5rem 2rem;
+  text-align:center;
+  cursor:pointer;
+  transition:background .3s,border-color .3s;
+  background:var(--card);
+  position:relative;overflow:hidden;
+}
+.taweeza:hover{background:var(--accent3)}
+.taweeza-kicker{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:1.2rem;
+}
+.taweeza-text{
+  font-family:'Amiri',serif;
+  font-size:28px;line-height:1.8;
+  color:var(--text);
+  direction:rtl;unicode-bidi:bidi-override;
+  display:block;transition:color .4s,font-size .4s;
+}
+.taweeza.lit .taweeza-text{color:var(--accent);font-size:33px}
+.taweeza-hint{font-size:11px;color:var(--text3);margin-top:1rem;display:block;letter-spacing:.08em}
+
+.spark{
+  position:absolute;pointer-events:none;
+  border-radius:50%;animation:sparkFly var(--dur) ease-out var(--del) forwards;
+  opacity:0;
+}
+@keyframes sparkFly{
+  0%{opacity:1;transform:translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}
+}
+
+.letter-block{
+  border-left:2px solid var(--accent);
+  padding:1.6rem 1.8rem;
+  background:var(--bg2);
+  border-radius:0 12px 12px 0;
+}
+
+.year-badge{
+  display:inline-block;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent2);
+  padding:5px 14px;border-radius:100px;margin-bottom:1.4rem;
+}
+
+.sig-block{
+  text-align:center;padding:3rem 0 0;
+  border-top:1px solid var(--border);margin-top:1rem;
+}
+.sig-label{font-size:11px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.sig{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;font-style:italic;font-weight:300;
+  color:var(--text);line-height:1.2;
+}
+.sig-arabic{
+  font-family:'Amiri',serif;
+  font-size:16px;color:var(--text3);margin-top:.6rem;
+  direction:rtl;
+}
+
+.observe{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.observe.visible{opacity:1;transform:translateY(0)}
+</style>
+
+<div class="page" id="page" data-theme="light">
+<canvas id="starfield"></canvas>
+
+<button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode" onclick="toggleTheme()">
+  <i class="ti ti-sun" id="themeIcon"></i>
+</button>
+
+<div class="hero">
+  <p class="kicker">june 11 &nbsp;·&nbsp; for you, always</p>
+  <div class="name-wrap">
+    <h1 class="name">Shadwa</h1>
+    <div class="name-underline"></div>
+  </div>
+  <p class="aka">aka Dodo</p>
+  <div class="scroll-hint">
+    <div class="bar"></div>
+    <span style="font-size:10px;letter-spacing:.15em">scroll</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="section observe">
+    <div class="section-label"><span>this past year</span></div>
+    <p class="prose">
+      You carried something <i>genuinely heavy</i> this year — the kind of weight most people keep hidden. I watched you navigate one of the hardest chapters of your life with a quiet, relentless strength that I don't think you fully give yourself credit for. The battles behind the scenes that nobody else saw — <i>I saw them</i>. And I've never been more proud of you.
+    </p>
+  </div>
+
+  <div class="section observe">
+    <div class="section-label"><span>what makes you, you</span></div>
+    <div class="qualities-grid">
+      <div class="q">
+        <div class="q-n">01</div>
+        <div class="q-title">A mind that earns every opinion</div>
+        <div class="q-note">sharp, never lazy</div>
+      </div>
+      <div class="q">
+        <div class="q-n">02</div>
+        <div class="q-title">Kind-hearted, genuinely</div>
+        <div class="q-note">not performatively</div>
+      </div>
+      <div class="q">
+        <div class="q-n">03</div>
+        <div class="q-title">Relentlessly goal-oriented</div>
+        <div class="q-note">you finish what you start</div>
+      </div>
+      <div class="q">
+        <div class="q-n">04</div>
+        <div class="q-title">Annoyingly practical</div>
+        <div class="q-note">I mean this with all my love</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section observe">
+    <div class="section-label"><span>التعويذة</span></div>
+    <div class="taweeza" id="taweeza" onclick="spellClick()">
+      <span class="taweeza-kicker">our spell — اضغط</span>
+      <span class="taweeza-text" id="spellTxt">بحبك موت موت فشخ موت</span>
+      <span class="taweeza-hint" id="spellHint">tap to activate</span>
+    </div>
+  </div>
+
+  <div class="section observe">
+    <div class="section-label"><span>what I need you to know</span></div>
+    <p class="prose" style="margin-bottom:1.6rem">
+      The year wasn't a clean story. There was distance, there were breaks, there were in-between moments where I wasn't sure what we were. And through all of it — <i>you kept finding your way back into my life.</i>
+    </p>
+    <div class="letter-block">
+      <div class="year-badge">more than a year</div>
+      <p class="prose" style="font-size:18px">
+        Seeing you on any given day is still, without a doubt, the best thing that happens to me. I love your depth. I love your mind. I love you for exactly who you are — through the bright moments and the exhausting ones alike.
+      </p>
+    </div>
+  </div>
+
+  <div class="section observe">
+    <div class="section-label"><span>today</span></div>
+    <p class="prose" style="text-align:center;font-size:20px;color:var(--text2)">
+      Look at yourself today and see what I see — a <i>brilliant</i>, strong, and deeply loved person. You made it through the roughest chapter. That matters more than you know.
+    </p>
+  </div>
+
+  <div class="sig-block observe">
+    <p class="sig-label">happy birthday</p>
+    <p class="sig">Shadwa</p>
+    <p class="sig-arabic">كل سنة وانتي طيبة يا Dodo</p>
+    <p class="sig" style="font-size:28px;margin-top:1.4rem;color:var(--text2)">جمال</p>
+  </div>
+
+</div>
+</div>
+
+<script>
+const page = document.getElementById('page');
+const icon = document.getElementById('themeIcon');
+let dark = false;
+
+function toggleTheme(){
+  dark = !dark;
+  page.setAttribute('data-theme', dark ? 'dark' : 'light');
+  icon.className = dark ? 'ti ti-moon' : 'ti ti-sun';
+  resizeCanvas();
+}
+
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars = [];
+let W, H;
+
+function resizeCanvas(){
+  W = canvas.width = canvas.offsetWidth;
+  H = canvas.height = canvas.offsetHeight;
+  stars = [];
+  const count = Math.floor(W * H / 6000);
+  for(let i=0;i<count;i++){
+    stars.push({
+      x: Math.random()*W, y: Math.random()*H,
+      r: Math.random()*1.2+0.3,
+      a: Math.random(), da: (Math.random()-.5)*.008,
+      speed: Math.random()*.12+.04
+    });
+  }
+}
+
+function drawStars(){
+  ctx.clearRect(0,0,W,H);
+  const col = dark ? 'rgba(200,185,240,' : 'rgba(100,80,160,';
+  for(const s of stars){
+    s.a += s.da;
+    if(s.a<=0||s.a>=1) s.da*=-1;
+    s.y -= s.speed;
+    if(s.y < -2) s.y = H+2;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle = col + s.a.toFixed(2) + ')';
+    ctx.fill();
+  }
+  requestAnimationFrame(drawStars);
+}
+
+let spellLit = false;
+function spellClick(){
+  const el = document.getElementById('taweeza');
+  const txt = document.getElementById('spellTxt');
+  const hint = document.getElementById('spellHint');
+  spellLit = !spellLit;
+  el.classList.toggle('lit', spellLit);
+  hint.textContent = spellLit ? '💜' : 'tap to activate';
+
+  if(spellLit){
+    const rect = el.getBoundingClientRect();
+    const elRect = el.parentElement.getBoundingClientRect();
+    const cx = el.offsetLeft + el.offsetWidth/2;
+    const cy = el.offsetTop + el.offsetHeight/2;
+    const colors = ['#c4b0e8','#a07fd4','#7c5cbf','#e8e2f5','#d4bff5'];
+    for(let i=0;i<28;i++){
+      const spark = document.createElement('div');
+      spark.className='spark';
+      const angle = (i/28)*Math.PI*2;
+      const dist = 60+Math.random()*90;
+      const tx = Math.cos(angle)*dist + 'px';
+      const ty = Math.sin(angle)*dist + 'px';
+      const size = 5+Math.random()*8;
+      spark.style.cssText = `width:${size}px;height:${size}px;background:${colors[i%colors.length]};left:${cx}px;top:${cy}px;--tx:${tx};--ty:${ty};--dur:${.6+Math.random()*.6}s;--del:${Math.random()*.25}s`;
+      el.appendChild(spark);
+    }
+    setTimeout(()=>{el.querySelectorAll('.spark').forEach(s=>s.remove())},1400);
+  }
+}
+
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible') });
+},{threshold:.15});
+
+document.querySelectorAll('.observe').forEach(el=>observer.observe(el));
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+drawStars();
+</script>
