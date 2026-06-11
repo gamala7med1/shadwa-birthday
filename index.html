@@ -1,4 +1,3 @@
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Amiri:wght@400;700&display=swap');
 
@@ -150,23 +149,46 @@ canvas#starfield{position:absolute;top:0;left:0;width:100%;height:100%;pointer-e
   padding:2.5rem 2rem;
   text-align:center;
   cursor:pointer;
-  transition:background .3s,border-color .3s;
+  transition:background .3s, border-color .3s, box-shadow .3s, transform .2s;
   background:var(--card);
   position:relative;overflow:hidden;
+  animation: pulseGlow 2s infinite ease-in-out;
 }
-.taweeza:hover{background:var(--accent3)}
+.taweeza:hover{
+  background:var(--accent3);
+  transform: scale(1.02);
+}
+.taweeza.lit{
+  animation: none;
+  box-shadow: 0 0 25px var(--accent3);
+}
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0px rgba(124,92,191,0); border-color: var(--accent2); }
+  50% { box-shadow: 0 0 15px var(--accent2); border-color: var(--accent); }
+  100% { box-shadow: 0 0 0px rgba(124,92,191,0); border-color: var(--accent2); }
+}
+
 .taweeza-kicker{
   font-size:10px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--accent);display:block;margin-bottom:1.2rem;
 }
 .taweeza-text{
   font-family:'Amiri',serif;
-  font-size:28px;line-height:1.8;
-  color:var(--text);
+  font-size:24px;line-height:1.8;
+  color:var(--text3);
   direction:rtl;unicode-bidi:bidi-override;
-  display:block;transition:color .4s,font-size .4s;
+  display:block;transition:color .4s, font-size .4s;
 }
-.taweeza.lit .taweeza-text{color:var(--accent);font-size:33px}
+.taweeza.lit .taweeza-text{
+  color:var(--accent);
+  font-size:33px;
+  animation: revealPop 0.4s ease-out;
+}
+@keyframes revealPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .taweeza-hint{font-size:11px;color:var(--text3);margin-top:1rem;display:block;letter-spacing:.08em}
 
 .spark{
@@ -213,7 +235,7 @@ canvas#starfield{position:absolute;top:0;left:0;width:100%;height:100%;pointer-e
 .observe.visible{opacity:1;transform:translateY(0)}
 </style>
 
-<div class="page" id="page" data-theme="light">
+<div class="page" id="page">
 <canvas id="starfield"></canvas>
 
 <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode" onclick="toggleTheme()">
@@ -271,9 +293,9 @@ canvas#starfield{position:absolute;top:0;left:0;width:100%;height:100%;pointer-e
   <div class="section observe">
     <div class="section-label"><span>التعويذة</span></div>
     <div class="taweeza" id="taweeza" onclick="spellClick()">
-      <span class="taweeza-kicker">our spell — اضغط</span>
-      <span class="taweeza-text" id="spellTxt">بحبك موت موت فشخ موت</span>
-      <span class="taweeza-hint" id="spellHint">tap to activate</span>
+      <span class="taweeza-kicker">our spell — اضغط هنا ✨</span>
+      <span class="taweeza-text" id="spellTxt">✨ lleps eht laever ot paT ✨</span>
+      <span class="taweeza-hint" id="spellHint">tap to reveal the magic</span>
     </div>
   </div>
 
@@ -300,21 +322,117 @@ canvas#starfield{position:absolute;top:0;left:0;width:100%;height:100%;pointer-e
   <div class="sig-block observe">
     <p class="sig-label">happy birthday</p>
     <p class="sig">Shadwa</p>
-    <p class="sig-arabic">كل سنة وانتي طيبة يا Dodo</p>
+    <p class="sig-arabic">كل سنة وانتي طيبة يا دودو</p>
     <p class="sig" style="font-size:28px;margin-top:1.4rem;color:var(--text2)">جمال</p>
   </div>
 
-</div>
+</div> <!-- end of content -->
+
+<!-- Full-Width Responsive ASCII Art Container -->
+<div class="section observe" style="text-align: center; margin: 5rem auto 2rem; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+  <div style="max-width: 640px; margin: 0 auto 1.8rem; padding: 0 2rem;">
+    <div class="section-label"><span>final surprise</span></div>
+  </div>
+  <pre id="ascii-container" style="
+    font-family: monospace; 
+    white-space: pre; 
+    line-height: 1.1; 
+    display: inline-block; 
+    text-align: left;
+    color: var(--accent);
+    font-size: clamp(4.5px, 0.62vw, 13px);
+    margin: 0 auto;
+    padding: 0 1rem;
+  "></pre>
 </div>
 
+</div> <!-- end of page -->
+
+<!-- Hidden Raw ASCII Data Store (Prevents string escaping bugs) -->
+<script type="text/plain" id="ascii-source">
+XXXXXXXXXXXXXXXXXXXYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUJJJJJJJJJJJJJJJJJJYnuxrxxnnnnuYfvu/YUUUYUUYYYYYYYYYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUUUUUUU
+XXXXXYYYYYYYYYYYYYYYYYYYYYYYUYUUUUUUUUUUJJJJJJJJJJJJJJJJJJJUJUJCJcUvQQQQQQLjrXLCLLCLLCCxuXrJCYJQZZLCUUUUUUUUUUUUUUUUUUUUUUUUUUUUJJJJJJJJJJUUJUUUJJJJJJ
+YYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUJJJJJJJJYYYXCJJJXXJLJUCuL00000YcLQQQ0JLxvLLLLQQLLLLxzmCbWW&&&&&WapvXJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJC
+YUUUUUUUUUUUUUUUUUUUUJJJJJXJJJJJJJJJCCC0Q0OuJULQQQQ0cC000000n0O00O0zUQ00000xfULX([1)(\tUj//tt\|\\||vM#WM**wCCCCJCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCJCC
+UUUJJJJJJJJJJJJJJJJJJJJJJJJJCCCCCCCCCCCzuvzXJJcQQQQQcxQQ000QtY0CcvXn1[{()|JU/({))||\/jhoYf\\tCb8&&&WMwZO*#*O0OCCCCCCCCCCCCCCCCCJUYCLLLLCLLLLLLLLCCCCCC
+JJJJJJJJJJJJJJJJUcvuuJCCCCCUCCCCCCCCLLLLQQ000JfJQQQQ0xj(|ttXj)))))/v(()|)/YCtf)\|t/pfa8%*r/f#BB%%8WMMMku11Lo1xJLLLLLLLLLLLLLLLLCLLLLLLLLLLLLQLLLLLLLLL
+JJCCCCCJJXczXUUurxnxrfxnucUJJCLLLLLLLQQQJYv){L/{|()(u1)1)(|\Y?|/tttX||//)(xCtf{\(|JWh#&dt/X#oh#a/xnvumkwmv/kwrZLLQQQQQQQQLQQQQQLQQQQQQQQQQQQQQQQQQLLLL
+CCCCCCCCvuuvXUYYJCCXxrrr|{{)xuvYUYCQQJucx)))(rr)(|//rc[\t|1/U{)1/\tz?(\/tttLrf[|fY*vxWWabLvk8BB%MkqqpW&MM#*wmUqZQQQQQQQQQQQQQQQXCQ0QQ0Q0QQ000QQQQQQQQQ
+CCLLLLLLQzLLLLLLLCLLnjft|(\|zQ000LvCU\xu\ftftnX-?\/)tC<\ttttXf|tt|tz\()//|t0ct\1tMMuu&*c#8%Zt|\1+i-~>i!l;;;;Il+UZQL000000000000JL000000000000000Q0QQQQ
+LLLLLUUJYJLLLLLLLLQLvjtrJQ0000000UxfXt((|/\/)rC?|ttttC{()tttr/{/t/\jC|/t/|/Yztt)(&0/mJ/CYc)lIIll!!ii><>>i!I:,,,,,:;!nOOOLCOOO00CQ000000000000000000000
+LCQQ0LXvftuCLQLLQLLQQr\fuQQ0Xtt/\/}~txxCQ}\ttfc|()1(tfz?\t\/rr[{|tttC~\fffjnX//1{ZOb)<I:;Il!i<~+_-??]}}[?-+iI,""""",:_J0{cOOOOOO00OOOOOOOOOOLO0000000Q
+LQ000QQQvnrULLLQLLQLQrftjrxjf\/tf/}+/uzjff///(zC<\t|(tY[/tftjc\\tf|jL{|)jtfxQt/{)XO<,",I>+-??][}{{}{{1}1{}]-<l:,""^"",!ct|LZZZOOcOOOOOOO0000JQ00000000
+JYLO0LQQYnjxCLQY/[YfQCf)\1+r]?ft|}/_?|uXCJ|(/\jJ]|/tttX|||f/jX-/t\(tvY\/ttjnQrt\]l""",l<-[}{{{11111{{}}}[}[]-+l:"""^^^",>_jZOOOLuOQOOOOO0OOOJ00QQQQQQQ
+|/cmmZ0QQnrjuLLQUJL00fj/jftzLQ\/ftt_?ftUvf-\/\jJ/{\ft/f/(fffjX)\|fjrrU{jrrrxUxxt,^"""I~-[[}[}}{1)))111{}[]]]?++I"""^""^^,~}ZOZZOz0QOOOOOOO00L0O00LLmah
+cYJnucCLLvx/rXQQQ000JXff)rnvQ0}t|1)\(rxncuuftftXX}jfffxr|rjrjnz\trjtxC(nncUL0v}"^^^,,i-][[}1)(|||txx/{?~i!!i>i!I,"""""^^",~|xzcvc000J00QYf|x/|/f\/jf//
+LQLXnxcCCJxffxCQ00LJvr}|/jruUYx1\}}(/rxuJu(+1tjtC(\(jr/u/nQUvY0ZmZZOZOOO00000-,^^^"":~-?[}{{jvvvcvj{>Il+}[[_+il;l,,,,^^"",:~|t]}}1||ftjrt/)urtf|/jj)(}
+CUCJnxjzvvjtt/tYvuu\tnut(/_\>r<]}|}\_\|xrYYr[]1tLL0OOOQCJ0ZOOO0OmZZZZOOO0Czcu!"^^^""I~<~]!lliI!~+>!Il?_<i<<-}1}<l:"""""",;~]{+-~~jcuxnfrn\((/]1])/)]]|
+OLLCcxfjXYft/|(rvj)t1|xfftrj\\Jf[{]))}[uvcx|(~]\xuCQLQQLOOOOCvxnnnnrjf/(t{1{)"^^,,,;;li]11}__]?:[--l!>!lI!<_+]})_l,,,^",:;<-)+?]}x//||)))(1[{{{(())()[
+QLCJcrffvJr1t)\/rrrvvrttj/jxuuOf]-(?|\juz0Zc()\jfJ/ft\\((/)|\tx)r(?{({({{]]]I^^""^"I!~}}+<I;<i<mbO1<-_-][}[[}}l{+;:""^,i!!?{t{)?vjnvUQLLLLLQQ0OZOZmmZ
+tfzJUxf/jrXtf/frrUYYncf(1/frnuQX)}-[-?1)ruXc}_[{tzpka8%Mdpn|{)\[x|>?i>?/?_~+l""lI^^,!]{]]}[]??{_mpmU{-)/fju/{__{{{iI^^>]/|?_txtfjxrtfxCmwmZOO0000QLLQ0
+njXCJnrtfxvj{}][[?vUCLz\{f\f({(\[]~i>!-nXY|0]_}wB%B@B%%8&8M#ov(1fcznrnx){[1}!:,^^^^",+}{\fjvOm\XOwm0Xv<!<+il{n|)(}i<,":>!>>l}tr/\rjft\(nYZmmOOOO000000
+nj(JCYr/tjuL/(|-_~f|1)\Xr1)\{<|{{?-_+~?||xtLZco%B%8&M8Waaoakpqq}()})]{{f?|[1[>i;"^^"I}{cfuct/?Y0ZZ0LXvY/[{1(||\\\1_?,,>]{+]??|/t/)(}\]\YOmwwmZZOO00000
+nr|}CJrt|/jv\[[-+<]JCUU)c{\1tnv/XtYZOwJ\/|?(cW&&&%%M#hkbmZ0LUznU(}/f({(//j/r/\/{:^^"I)|JUf|{1)Uurnrj/?<?[11{(|||\(?+^,I-\\]nf)[/((|)|wwC0mwwmmZZO00000
+nr1~\Xv\11]\(jj/)+?xvv}j(1/t\))t<{+fur{r/t//pWMMW&ammmmZLUzvur/(jj\){)\|f\)/1(fnj):,;1/\/\1}{[]ili[?I:!<~<+{1||\(1:^,;<>/()1t))(f/uXJCcZmwwwmmmZOO00OO
+xf)?<tt)){]{/1]-~_1t(|||{1]}1-+\\||t/\ft/1(\hM*MWmzLZmLzjtff/){}]r\|)[11(Xwqqdhhhbc!I1t//\{}~+1?++??-+][]-<[{||(|(,":-](\1}~}])t0kZwuvZwqqwwwmmZOOOOO0
+[?(/11})|/1({\}~i<~]}-{[?}(\//ttJJmOt(ncvc\jkM##w]cz|-~ii<}\+!!>~-xObkkkkdmZmwv|1{t/>")//\)_-]]][][-i>__-}{)(|((|]"",l}{|?|{)trmOwUxmwqqqqqwmmO000Q00Q
+{/)[1/{(/?{{+_>I;Ilii?_){1|](1({1[1(1}?{)[}}d#oa_{\-!IlI,",+i,"",:!_x\()//t\t|t\//||{+<()|\|){txr\1{{{)||(((())1{>",,i|r}})\zbqqUrLmwwwqqqwwmZOQ0000OQ
+)i>i?_<_)!_-?+1{l::I;;:l<>tfnxcxcczXYQpdddbdaoad+/JU>i!!::lJz;",;I!{Xrft\/1)(|t|((\CaJcu1)\\\///{]~>i+})(((())11[})1?(\uOmZq0kvjLwwwqqpqqwwwwmZOZO00OZ
+vvzYzczc\]?uvr?!>;;+!i+_{1(txUQQqddddpddddddhkb0{nzx\-+>>~/wX(;,;:{ffzjt(juXOQJOXXCCOpqO[_|/\/\\\1+>i_})))())1}][{]+n)cdbmCzrjYmwwwqqqqqwwwwmmZmOOZOZO
+vrurnuuvz{_uuucxzxzXYYUmqqdddbddddddpdqr\nrxbhk0z\cXx//{{|-_/1]1|x|1/jcdLzXcc0pdbqLbpJj]??-{t///|1]+~~~[{{}{}?]]]]-_]>^",~nrf|trQwwqqqqqwwmmmmmmZZmOOZ
+zucxuuvzX\[/YCXmqddddbddddbdbd0LL|[{/t\/f\x|hapbCnznt\()z|1}[}){tLqUuvXULdbkkkkbU1Xcxfxl~~<?+{(|{[+>>i>ii+~>+]][]?_++~!,ll!<tXUQqqqqpqqwwmwmZZZmZZZOZZ
+nxjYOZ0ZpdddddbddddbdddJjtt|)))\f\\)|\)\jt\to*pqwYvnt|{[(]??_]{)xYOmbbOLbwbmqkqz\)r(urt|[|tjx[r1?<i::;:::;i]}}}[]-_+~>II;;;IIIIlII~fvqqqwwwmmwwmwmwwmZ
+dddddddddddbdwmmc(1/jf\/((1\{(/\|[\|]|/f/(txuhkmd0Lnf\(((|(11)(f0pnzQ0uwmt|)]Y((+]/-{(\[|(+(vj<)||)[?][[}{111}}}]-_~lI;;;;;III;;I</|(\|(|/tXmwmmmmZZmm
+pddqpLcvn\\/tt/jt\t1))\(\(tfj1(|())|/((tttxuzObwbZJJcft\||({{(jcfYv(\11v(v/r/u(?\~){x((|fvuu]<<;\////\(())))1{{}]<l;;;;;;;;;;;;!)///(+~)||\\\\fzXCZmwm
+j(11//ff(j\t/r(t/)[(t\){{(|({/(11\}}rnuOkCunnuC**bmYXXYYXcvrrnccc}1-}x/1)](?(|}||cnf?[uxrrj{<!>"~//\||(||(()){_I;;;;;;;;;;;;;I>t/t/\i|//\\\t[)11)(\rOZ
+})){)[{1\/(tff/)f\r1\1\f//j\\xfYLUQ0cnnnnXUCqdW%@&#pLvjvvvuuvvux1~\rjvvnYfnf|(v/(jjuxrrfttj_il!>l+[[[[]??-iI;;;;;;;;;;;;;;;;;>////\?//t\/\[{|\/\/\\||/
+)(||(t(1\t|(1\\/\(\f|j((rXmmXccjrxxuYmmqppM&B@@MaddpZQUccccvnxnxxcccXXcXXcUJdk()\-[tjt/\/f|>!l!i!!!!llIII;;I:;;;;;;;;;;;;;;;I?\tt\[|\|/\[}|||||((1}}}(
+\x/|\()t1\/xnj(ftrxcOmLxrnxxxczQpqqpppboW*@%B8WM8hpkpQCJXzzccuucvunvnxcvx/uQooaLj1(/(1((\/|>liii!llIlllIIIII;;;;;;;;;;;;;;;!<1/1(|1|(\([{)(||)){}]]||\
+(|\\\(|)\\tfJZLYYurrrxrjLLZqqqpqqppp#8B@%8&M*pdadpbbddmwZCUYXcvuuvcvcxx\frvaOqdqz?t1{?)(/\)il!!i!lllllIIIII;;;;;;;;;;III![1+]\}[|1?))([{(()?!;i-}1111(
+/\/|jzCbdXjjjrrrtjvLqqqwppqqqpqqpq*BB@BB@BM#B%ahhabkbwOQCJUYzvvvuj/fvr|fjxxabvZmp[[11_(\t\|i!<l!illIIIIlII;IIIIII;;;IIIIlll\|[-{([[()1i[[];<{|1}}{{(((
+CLJUnjjtffj/XXQqqqqqqqqqqmxmXtrnw*M*MMMha*W&88MM#%%&aZJvuzXJYYuzrnuf|\tfrnxjrjnUQ<+1-[t/\\[+i>!!i!lllllIIIII;III;IIIIII~((|\[+?((_1))[]]-;?(){]?[)()(\
+jjfftj/JOZwwwqqwwqqqqwqpqq0U?]\O&&##*o#wph*#qmwbkdOQJv/I;<~_YYzvn/\/jrtjxrtjj/\r\><}_)jz///?<{+!!!ll!lIIIIIIIlIIIIIIII_())\[~~[(}l[)[?>[i?}?}>?(((|))1
+vzZwwmwwwwwwqwqqwwwwqwqwmQQft])*&WWMM#&M##&WamQUXuf[-+<}>l?/:_XYzcvvnrttxrttt//\}>>[?fc*pcjqu\(1}]-!lIIIIIIIllI;IIIII[())|}~<-)(];]}_+>??[~?_1|()11((|
+mwwwwwqwwwqqOxjOLqLvZ(/|rUtpv]dW&#kkM##pqmOr]?-i;;{]<};:i]]I!""/YUXzuxjfxx/\f|/t}>>[{Zp0Zw&dMc{]|/\}!lIIIIIllIIIIIIII)||f1_<+]1)<;]-~<_[]!~}{{11}[}}11
+wwwqqqwqqmwz|11ckpnx//{)-[r-rnbZO1?xQQCx_ll;;;}mhpkjt/1;}Lvt!]l:?zJJXzunjr\////|[>!~fUw*UMcpWj(\||}]+lllllllIIIIIIIIl(\t)_<<-}){;;]_>>]]>l]}1}1{)1111)
+wwwwwqZUXu)\(||_)fuu1~?~l}]{}qqOLn<l?l><}~I!;QZC1|(\Jc{j|t[i??/>t}(XJLdbYj|\/\tf[<>>/8%LCzMdM(((11[]}>ll!+]_lIIIIIIl[/f(?>>+]}|-:;-<i!>~!!?]{1{}[}{111
+nqmJvznfU|/+_{/{||\tf/il>]|--QL0Quj(I:,>{+I>XOj_Yv1_j(c)1+X(-LOcUnrujbbmLx\\\tu|]~<>[LWu80&hu(){{[])))[{1}11?>lIlIl_|t(]<!<_]()<,;_+!l>-i!-][]++}{{11)
+tr/1\tqpc?-]]>!-]~]_t/){||{/(_tOCvY?_;:[>iI-Zt)xYnjr_}j]~{c)>1|]uoZQx)JdZu/(\/c1-+~<1OJCZ#c*j1)1[[[{1){[[{(1]]}[]_1|t([+ii+_](}i,I-<!!![<>_]]<+[}{[-+_
+?-j(Jvx|/j?+;~)f~)ii}f(fjt/X|rnqQc1[)-r[-(!U0\fnJ]j-~u{r}[1>>{]jJhLQmhwYOQcf|||{-+<<Zfxt/t%Wf1{{}}[{1?[}1)1[[{11)|\t\}~i!<~-}|_l,I_<il!-~!~?~i_)~I;![1
+~>)(1t|-{|t{|U/?}_>[)jf]}+<](|)r0Y(]?_?x];?Jwr\+?j[fx>]-xt]u?-vrQdqbkmJznZZZr/)[-~<<j/||(\1u\}{}}[}{}}1)))1}{){(||t(}+ii><~-{{+I:I_<!ll_+~<-_~_!";_]{)
+_~+<[[f?+<~_1[|(ft{\n[\||+i[1)|\uJn>;<f{1]urZCn)<]+t_i!i{n}{\tfv}1XpwOJ\_tOJOx\1-++?t|(((|11{{}{}}{}{1)()1}{}{)(\\|}->i><~_](}<;:I_<i!Ii+<~??->":!?1){
+>l;+-<}-~!<[>-?1[})-u1r]ux||n//t)0z~I!-\/+|n1hhC[{1~\zzqUbdkJ_fli{~(!++~l)z0UmvtJu?||)(1{1{1}}}[}}{11)))1{{{{))\|1[_>i><~+_?1]!I:l_~iII!+><]]{l^:_[<_?
+{-(((n}1>/-_}{){(+tu)_)|cr\|[1c(+t([_[]+>!]f]_cvqwUuYf+1\|}vCO-I;;::,,-{?I:tZQZ0QQCU){{}}{}{}}}}}{111)))1}}{(||(1[+>i><++~+{(_iI;>_<>lI!~ii+-[l^-<ii~_
+f1[//1tf+i-}\]/z?/Y}~!_}<~nU}/+_t}}~vc|![j-\>/\r+)cjx{}~~Ii>}cU;:,,"^)}:l","fZw0pO0X1][[}[[[{[}{}{1{{1}{1{1||){[]~i!>++<<~-1}+!I;~+_>lII>>l>__!i>I;l><
+1]{{{]|}(\jt(]_>{]][+{_}r/-ii??|t(un/xt[<>tJ?{\j[l?t||[~_;,--|x:::,,)1i;!lI":jZZ0ppQ{?]]}]][[}[[[}[}}{[[[}1{}]]-<ii~__++<~]|]<lI;+_~>!II<~ii+<>i[]!!>>
+-]_]}1j}}(\|jjc!<<i?+{?{f{{tfx(x]__(_/Ur\[J|/+|tiI}{?_>;I?I[}f/!~!:l|{I"I<:`^!(m0COX1?-}[][][[[]}[[]{[[}[]?_+_+>ii<+__+<>_{)->lI;+_~>!I;!<>I>i>-wwLJ\<
+{|]>(}>)|\]||v(xj>1(n-_1}+|-r?II--t}f\jjwmv/?ujxt;jmY|j_>!I-/j<?f-(-!1+iIl,!I}-uLCUXc-+[}[?]}[[[[][]??[]--_+-+>ii<+++~<>>~(}_<!II++~>!I;l+>li!i+wmmmmm
+]~~i-r/f\\vz}|\|\/((nvn{j1?+{!_-xXcUwmOfXZJ1(!iI??[?(|wjtfXuX+~i]\({}<?!(CdZn1?XrzrXY-~?1}]?[}{}[[]]]]?--_--+<ii>~~~~<iii?(]+ilIl~++<il;I><>l!<Xmmwwmm
+![?_>_zzuzYrzn(fjzUYYX|c\>(un)tC0QkLvOtnYkO|>ll!zt[vzzzZzcYf(nZqwL11|xdpqOUuj)n-~~rXU?<~}{]]{1{[]-?]?[]]_-?-~>i<++~~<i!l<)1-~!lI!<++>il;Ii+>iI_LmmZZZw
+~?<~][(jn})un/|t|fjjf|tvxrUcZmCUXcmhb0LoaaaJfvn(i]/ufxn|vXnt}1rZbdqXnXJzrft(_,::0l(LL1><[}]/k(}]????]]???-_~<<~~++<<il!~}|}_<!lI>++~>il;I!><>l-0mmwZZZ
+!>l;!!>>+1}tvXcu/}(XJYXLdwwdadhahZuwbbkpwkkbqc?-+?]Xv)}([zjx_xqwLzx/|1{??(]-}?[|JlxYZx>>[{{Lj{]-???]??][--+<<~++~<i!!!<[()]+>!ll<~+~>il;;!i<>+_QwwZmZO
+>:ll_)r-tf]jxt/|}1f\c/OkmJUXObhpmUhakOmkkhkpwr1I>_lI[f}\-/CpQXj/(XZZu?-_?_>^<i~ur>JOOn~!-}uL1]--?--][]??_+<<~~+~~<iii>-(/{-~>!l!<<~~<il;;li><>~JOQQ0OZ
+
+  _____   _                                                                       _         ______  
+ |_   _| | |                                                                     | |       / /___ \ 
+   | |   | | _____   _____   _   _  ___  _   _   ___  ___    _ __ ___  _   _  ___| |__    / /  __) |
+   | |   | |/ _ \ \ / / _ \ | | | |/ _ \| | | | / __|/ _ \  | '_ ` _ \| | | |/ __| '_ \  < <  |__ < 
+  _| |_  | | (_) \ V /  __/ | |_| | (_) | |_| | \__ \ (_) | | | | | | | |_| | (__| | | |  \ \ ___) |
+ |_____| |_|\___/ \_/ \___|  \__, |\___/ \__,_| |___/\___/  |_| |_| |_|\__,_|\___|_| |_|   \_\____/ 
+                              __/ |                                                                 
+                             |___/                                                                  
+</script>
+
 <script>
-const page = document.getElementById('page');
 const icon = document.getElementById('themeIcon');
 let dark = false;
 
+// Set initial explicit light theme on root element
+document.documentElement.setAttribute('data-theme', 'light');
+
 function toggleTheme(){
   dark = !dark;
-  page.setAttribute('data-theme', dark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
   icon.className = dark ? 'ti ti-moon' : 'ti ti-sun';
   resizeCanvas();
 }
@@ -362,11 +480,11 @@ function spellClick(){
   const hint = document.getElementById('spellHint');
   spellLit = !spellLit;
   el.classList.toggle('lit', spellLit);
-  hint.textContent = spellLit ? '💜' : 'tap to activate';
 
   if(spellLit){
+    txt.textContent = 'بحبك موت موت فشخ موت';
+    hint.textContent = '💜';
     const rect = el.getBoundingClientRect();
-    const elRect = el.parentElement.getBoundingClientRect();
     const cx = el.offsetLeft + el.offsetWidth/2;
     const cy = el.offsetTop + el.offsetHeight/2;
     const colors = ['#c4b0e8','#a07fd4','#7c5cbf','#e8e2f5','#d4bff5'];
@@ -382,6 +500,9 @@ function spellClick(){
       el.appendChild(spark);
     }
     setTimeout(()=>{el.querySelectorAll('.spark').forEach(s=>s.remove())},1400);
+  } else {
+    txt.textContent = '✨ Tap to reveal the spell ✨';
+    hint.textContent = 'tap to reveal the magic';
   }
 }
 
@@ -394,4 +515,33 @@ document.querySelectorAll('.observe').forEach(el=>observer.observe(el));
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 drawStars();
+
+
+// ===================================================
+// ASCII Art Typewriter Animation Logic
+// ===================================================
+const asciiArt = document.getElementById('ascii-source').textContent.replace(/^\n/, '');
+const asciiLines = asciiArt.split('\n');
+const asciiContainer = document.getElementById('ascii-container');
+let asciiLineIndex = 0;
+let animationStarted = false;
+
+function printAsciiLine() {
+  if (asciiLineIndex < asciiLines.length) {
+    asciiContainer.textContent += asciiLines[asciiLineIndex] + '\n';
+    asciiLineIndex++;
+    setTimeout(printAsciiLine, 80); // Speed: 80ms delay per row
+  }
+}
+
+const asciiObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !animationStarted) {
+      animationStarted = true;
+      printAsciiLine();
+    }
+  });
+}, { threshold: 0.05 });
+
+asciiObserver.observe(document.getElementById('ascii-container'));
 </script>
